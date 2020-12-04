@@ -2,8 +2,10 @@ package com.vacomall.common.util;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 /**
@@ -12,6 +14,8 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
  * @date 2016年8月23日
  *
  */
+@Component
+@WebListener
 public class SpringUtil implements ServletContextListener {
 
 	private static WebApplicationContext springContext;

@@ -20,8 +20,12 @@
             	%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] %logger{36}.%M %L -- %msg%n
             </pattern>
         </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logPath}/run.%d{yyyy-MM-dd}.log</fileNamePattern>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/run.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>500MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
     </appender>
 	<!-- 只记录SQL日志 -->
@@ -32,12 +36,51 @@
             	%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] %logger{36}.%M %L -- %msg%n
             </pattern>
         </encoder>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${logPath}/run.%d{yyyy-MM-dd}.log</fileNamePattern>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/run.sql.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <maxFileSize>500MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
         </rollingPolicy>
     </appender>
-	
-	 <!-- logback为java中的包 -->   
+
+    <!-- 滚动日志文件 -->
+    <appender name="ROLLINGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <!-- 按天新建log日志 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/geb-%d{yyyyMMdd}-%i.log</fileNamePattern>
+            <!-- 每个文件保留30天，单文件最大500MB，日志文件最大占用20G空间-->
+            <maxHistory>30</maxHistory>
+            <maxFileSize>500MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <encoder>
+            <!-- %ex就是指抛出的异常，full是显示全部，如果在{}中写入数字，则表示展示多少行 -->
+            <pattern>%-4d [%thread] %-5level %logger.%method - %msg%n%ex{full, DISPLAY_EX_EVAL}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="freemarker" level="INFO" additivity="false"/>
+    <logger name="com.atomikos" level="INFO" additivity="false"/>
+    <logger name="org.apache" level="INFO" additivity="false"/>
+    <logger name="org.hibernate" level="INFO" additivity="false"/>
+    <logger name="org.eclipse.jetty" level="INFO" additivity="false"/>
+    <logger name="org.apache.kafka" level="INFO" additivity="false"/>
+    <logger name="org.apache.jasper.compiler" level="FINE" additivity="false"/>
+    <logger name="org.mybatis.spring" level="DEBUG" additivity="false"/>
+
+    <logger name="org.springframework.security.web" level="INFO" additivity="false"/>
+    <logger name="org.springframework.context.annotation" level="INFO" additivity="false"/>
+    <logger name="org.springframework.beans.factory.xml" level="DEBUG" additivity="false"/>
+    <logger name="org.springframework.beans.factory.support" level="INFO" additivity="false"/>
+    <logger name="org.springframework.web.servlet.mvc.method" level="INFO" additivity="false"/>
+    <logger name="org.springframework.boot.autoconfigure.logging" level="INFO" additivity="false"/>
+
+    <!-- logback为java中的包 -->
   	<logger name="com.vacomall.mapper" level="debug">
   		<appender-ref ref="SQL" />
   	</logger>   

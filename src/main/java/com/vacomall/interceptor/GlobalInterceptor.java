@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -21,6 +22,7 @@ import com.vacomall.service.ISysSettingService;
  * @author jameszhou
  *
  */
+@Component
 public class GlobalInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
